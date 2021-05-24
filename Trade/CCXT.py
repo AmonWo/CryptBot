@@ -1,5 +1,7 @@
 import ccxt
 import pandas as pd
+import numpy as np
+
 
 class CCXT:
     def __init__(self):
@@ -25,3 +27,37 @@ class CCXT:
             return main_df
         else:
             'NO OHLCV'
+
+    def buy_sell(self, df):
+        buy_price = []
+        sell_price = []
+        flag = -1
+        counter = 0
+        n = 96
+
+        for i in range(len(df)):
+            if df['Prediction'][i] == 1 and counter == 0:
+                if flag != 1:
+                    buy_price.append(df['Close'][i])
+                    sell_price.append(np.NaN)
+                    flag = 1
+                else:
+                    buy_price.append(np.NaN)
+                    sell_price.append(np.NaN)
+            elif df['Prediction'][i] == -1 and counter == 0:
+                if flag != 0:
+                    buy_price.append(np.NaN)
+                    sell_price.append(df['Close'][i])
+                    flag = 0
+                else:
+                    buy_price.append(np.NaN)
+                    sell_price.append(np.NaN)
+            else:
+                buy_price.append(np.NaN)
+                sell_price.append(np.NaN)
+
+            counter += 1
+            if counter == n:
+                counter = 0
+
+        return buy_price, sell_price

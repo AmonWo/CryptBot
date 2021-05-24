@@ -9,3 +9,6 @@ class CsvReader:
         df = pd.read_csv(path_to_csv, index_col=0)
         df.columns = ['Open', 'High', 'Low', 'Close', 'Volume', 'Trades']
         return df
+
+    def save_to_csv(self, df):
+        df.to_csv('Export/PredictExport.csv')

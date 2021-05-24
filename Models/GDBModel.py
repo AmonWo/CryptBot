@@ -1,13 +1,7 @@
-from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import cross_val_score
-from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
-from sklearn.svm import SVC
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
-from sklearn.ensemble import GradientBoostingClassifier
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.base import clone
+from sklearn.model_selection import cross_val_score
 
 
 class GDBModel:
@@ -30,12 +24,10 @@ class GDBModel:
         self.model = self.create_model()
 
     def create_model(self):
-        # clf_svm = OneVsRestClassifier(SVC(verbose=True, cache_size=1000), n_jobs=-1)
-
         clf_gdb = GradientBoostingClassifier(
             verbose=True,
             warm_start=False,
-            n_estimators=500,
+            n_estimators=50,
             learning_rate=0.1,
             max_depth=3,
             random_state=42,

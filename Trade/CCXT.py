@@ -1,7 +1,6 @@
 import ccxt
 import pandas as pd
 
-
 class CCXT:
     def __init__(self):
         print('CCXT Initialized')

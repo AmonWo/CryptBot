@@ -1,5 +1,6 @@
 from Trade import CCXT
 from Utility import CsvReader
+from Utility import ModelMeasure
 from Measure import Plotter
 from PreProc import CryptoPreprocessor
 from Models import GDBModel
@@ -9,7 +10,8 @@ import pandas as pd
 from sklearn.metrics import classification_report, mean_squared_error
 from sklearn.metrics import accuracy_score
 
-PREDICTION_DAYS = 48
+# Halbwegs gute Werte: 48
+PREDICTION_DAYS = 96
 
 
 def main():
@@ -18,11 +20,11 @@ def main():
     plotter = Plotter.Plotter()
     cr = CsvReader.CsvReader()
     df = cr.read_dataframe('OHLCV/ETHUSD_15.csv')
-    gdb_model = GDBModel.GDBModel().model
-    preproc = CryptoPreprocessor.CryptoPreprocessor(gdb_model)
-
+    gdb = GDBModel.GDBModel()
+    preproc = CryptoPreprocessor.CryptoPreprocessor(gdb.model)
+    mm = ModelMeasure.ModelMeasure()
     # train_data = data between start/enddate, test_data = data since enddate
-    train_data, test_data = preproc.select_date_range(df, end_date='2021-01-01')
+    train_data, test_data = preproc.select_date_range(df, end_date='2021-03-30')
 
     print('TrainData:\n', train_data, '\nTestData:\n', test_data)
 
@@ -41,6 +43,8 @@ def main():
     y_pred = preproc.pipeline.predict(X_test)
 
     test_data['Prediction'] = preproc.pipeline.predict(test_data)
+
+    mm.plot_importance(gdb)
 
     cr.save_to_csv(test_data, 'fresh_predict')
 

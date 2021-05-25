@@ -33,7 +33,7 @@ class CCXT:
         sell_price = []
         flag = -1
         counter = 0
-        n = 96
+        n = 2
 
         for i in range(len(df)):
             if df['Prediction'][i] == 1 and counter == 0:

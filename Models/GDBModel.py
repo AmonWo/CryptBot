@@ -2,6 +2,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.model_selection import cross_val_score
+import matplotlib.patches as mpatches
 
 
 class GDBModel:
@@ -17,10 +18,13 @@ class GDBModel:
         clf_gdb = GradientBoostingClassifier(
             verbose=True,
             warm_start=False,
-            n_estimators=100,
+            n_estimators=10000,
             learning_rate=0.01,
-            max_depth=3,
+            max_depth=5,
             random_state=42,
         )
-
+        params = clf_gdb.get_params()
+        for key in params:
+            label = key + ': ' + str(params[key])
+            self.plt_legend.append(mpatches.Patch(color='red', label=label))
         return clf_gdb

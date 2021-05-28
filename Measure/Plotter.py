@@ -51,3 +51,13 @@ class Plotter:
         plt.ylabel("Price in USD")
         plt.title("ETH/USD Chart")
         plt.show()
+
+    def plot_buy_sell(self, df):
+        plt.figure(figsize=(16, 8))
+        plt.scatter(df.index, df["Buy"], color="green", label="Buy", marker="^", alpha=1)
+        plt.scatter(df.index, df["Sell"], color="red", label="Sell", marker="v", alpha=1)
+        plt.plot(df.index, df["Close"], alpha=0.5)
+        plt.xlabel("Date")
+        plt.ylabel("ETH Price in USD")
+        plt.title("ETH/USD Chart")
+        plt.show()

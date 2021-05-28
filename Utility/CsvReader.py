@@ -2,13 +2,12 @@ import pandas as pd
 
 
 class CsvReader:
-    def __init__(self):
-        print('CsvReader Initialized')
-
-    def read_dataframe(self, path_to_csv):
+    @staticmethod
+    def read_dataframe(path_to_csv):
         df = pd.read_csv(path_to_csv, index_col=0)
-        df.columns = ['Open', 'High', 'Low', 'Close', 'Volume', 'Trades']
+        df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
         return df
 
-    def save_to_csv(self, df):
-        df.to_csv('Export/PredictExport.csv')
+    @staticmethod
+    def save_to_csv(df, path):
+        df.to_csv(path)

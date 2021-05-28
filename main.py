@@ -1,30 +1,26 @@
-from Trade import CCXT
-from Utility import CsvReader
-from Measure import Plotter
-from PreProc import CryptoPreprocessor
-from Models import GDBModel
-from Models import GdbRegModel
 import numpy as np
-from sklearn.metrics import classification_report, mean_squared_error
 from sklearn.metrics import accuracy_score
 
+from Measure import Plotter
+from Models import GDBModel
+from PreProc import CryptoPreprocessor
+from Trade import CCXT
 
-PREDICTION_DAYS = 30 * 96
+PREDICTION_DAYS = 10
 
 
 def main():
     # Initialize classes
     ccxt = CCXT.CCXT()
     plt = Plotter.Plotter()
-    cr = CsvReader.CsvReader()
-    df = cr.read_dataframe('OHLCV/ETHUSD_15.csv')
+    df = ccxt.get_ohlcv(symbol="BTC/USD", timeframe="1m")
+
+    # df = cr.read_dataframe('OHLCV/ETHUSD_15.csv')
     gdb_model = GDBModel.GDBModel().model
     preproc = CryptoPreprocessor.CryptoPreprocessor(gdb_model)
 
     # Add timestamps for the following month
     df['Prediction'] = np.where(df['Close'].shift(-PREDICTION_DAYS) > df['Close'], 1, -1)
-
-    cr.save_to_csv(df)
 
     # Cut predicted month from training data
 
@@ -47,9 +43,6 @@ def main():
 
     # print('\nPREDICT:\n', gdb_predict)
 
-    print(df)
-
-    # cr.save_to_csv(df)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

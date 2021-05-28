@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-NUMERICAL_COLUMNS = ['Open', 'High', 'Low', 'Volume', 'Trades']
+NUMERICAL_COLUMNS = ['Open', 'High', 'Low', 'Volume']
 
 
 class CryptoPreprocessor:

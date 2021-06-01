@@ -8,8 +8,8 @@ class GdbRegModel:
     def create_model(self):
         gdb_reg = GradientBoostingRegressor(
             verbose=True,
-            n_estimators=100,
-            learning_rate=0.01,
+            n_estimators=10,
+            learning_rate=0.1,
             min_samples_split=5,
             max_depth=4,
             random_state=0,

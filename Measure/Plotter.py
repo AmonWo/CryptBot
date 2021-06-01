@@ -9,7 +9,7 @@ from datetime import datetime
 
 class Plotter:
     def __init__(self):
-        print('Initialized Plotter')
+        print('INITIALIZED PLOTTER\n')
 
     def plot_deviance(self, pipeline, X_test, y_test):
         test_score = np.zeros((pipeline.named_steps['classifier'].get_params()['n_estimators'],), dtype=np.float64)
@@ -53,7 +53,9 @@ class Plotter:
         plt.show()
 
     def plot_buy_sell(self, df):
-        plt.figure(figsize=(16, 8))
+        fig = plt.figure(figsize=(16, 8))
+        axes = fig.add_subplot(111)
+        axes.xaxis.set_major_formatter(DateFormatter("%Y/%m/%d"))
         plt.scatter(df.index, df["Buy"], color="green", label="Buy", marker="^", alpha=1)
         plt.scatter(df.index, df["Sell"], color="red", label="Sell", marker="v", alpha=1)
         plt.plot(df.index, df["Close"], alpha=0.5)

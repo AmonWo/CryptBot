@@ -18,10 +18,11 @@ class GDBModel:
         clf_gdb = GradientBoostingClassifier(
             verbose=True,
             warm_start=False,
-            n_estimators=10000,
+            n_estimators=100,
             learning_rate=0.01,
             max_depth=5,
             random_state=42,
+            n_iter_no_change=10
         )
         params = clf_gdb.get_params()
         for key in params:
